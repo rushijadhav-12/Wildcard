@@ -1,8 +1,6 @@
-Set-Content -Path "app.py" -Value @"
 import os
 import csv
 import random
-import json
 import streamlit as st
 import pandas as pd
 from xgboost import XGBClassifier
@@ -15,14 +13,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-st.markdown("""
-    <style>
-        .main { background-color: #0F172A; color: #F8FAFC; }
-        .stSidebar { background-color: #1E293B; }
-        h1, h2, h3 { color: #F8FAFC !important; font-family: 'Inter', sans-serif; }
-    </style>
-""", unsafe_allow_html=True)
-
+# --- AUTO-GENERATE DATASET IF MISSING ---
 if not os.path.exists("master_payment_simulation.csv"):
     with open("master_payment_simulation.csv", "w", newline="") as f:
         writer = csv.writer(f)
@@ -98,4 +89,3 @@ with res_col2:
 st.markdown("---")
 st.subheader("📊 Master Simulation Dataset Preview")
 st.dataframe(df[['transaction_id', 'user_id', 'amount', 'device_trust_score', 'fraud_vector', 'is_fraud']].head(10), use_container_width=True)
-"@
